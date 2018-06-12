@@ -1,3 +1,8 @@
+## 0.2.0
+
+  - Templates links have templated attribute #3
+
+
 ## 0.1.0
 
 #### New Features
