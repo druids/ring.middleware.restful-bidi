@@ -11,7 +11,7 @@ Leiningen/Boot
 --------------
 
 ```clojure
-[ring.middleware.restful-bidi "0.1.0"]
+[ring.middleware.restful-bidi "0.2.0"]
 ```
 
 Documentation
