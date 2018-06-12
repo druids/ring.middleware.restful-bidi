@@ -11,15 +11,18 @@
                     flatten
                     (filter keyword?)
                     drop-last)]
-    {:href (if (empty? params)
-             (str host (bidi/path-for routes (:handler route)))
-             (str host
-                  (apply bidi/path-for
-                         (concat [routes (:handler route)]
-                                 (->> params
-                                      (map #(vector % (get-in response [:body %] (str "{" (name %) "}"))))
-                                      flatten)))))
-     :type (->> route :path last name upper-case)}))
+    (merge
+      {:href (if (empty? params)
+               (str host (bidi/path-for routes (:handler route)))
+               (str host
+                    (apply bidi/path-for
+                           (concat [routes (:handler route)]
+                                   (->> params
+                                        (map #(vector % (get-in response [:body %] (str "{" (name %) "}"))))
+                                        flatten)))))
+       :type (->> route :path last name upper-case)}
+      (when-not (empty? params)
+        {:templated true}))))
 
 
 (defn- wrap-with-links
@@ -41,9 +44,11 @@
 
 
 (defn wrap-bidi-restful
-  [handler routes host model]
-  (fn [request]
-    (let [response (handler request)]
-      (if (contains? #{200 201} (:status response))
-        (wrap-with-links routes host model request response)
-        response))))
+  ([handler routes host model]
+   (wrap-bidi-restful handler routes host model "application/hal+json"))
+  ([handler routes host model content-type]
+   (fn [request]
+     (let [response (handler request)]
+       (if (contains? #{200 201} (:status response))
+         (wrap-with-links routes host model request (assoc-in response [:headers "Content-Type"] content-type))
+         response)))))
