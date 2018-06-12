@@ -1,4 +1,4 @@
-(defproject ring.middleware.restful-bidi "0.0.0"
+(defproject ring.middleware.restful-bidi "0.1.0"
   :description "A simple Ring middleware that generates RESTful links for resources"
   :url "https://github.com/druids/ring-middleware-case-format"
   :license {:name "MIT License"
