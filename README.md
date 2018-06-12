@@ -11,7 +11,7 @@ Leiningen/Boot
 --------------
 
 ```clojure
-[ring.middleware.restful-bidi "0.0.0"]
+[ring.middleware.restful-bidi "0.1.0"]
 ```
 
 Documentation
@@ -57,7 +57,7 @@ A response from `:api/users` `"/users"` resource will look like:
 
 ```json
 {
-  "data": [{"username": "jdoe"}]
+  "data": [{"username": "jdoe"}],
   "_links": {
     "self": {
       "href": "http://localhost:3000/users",
